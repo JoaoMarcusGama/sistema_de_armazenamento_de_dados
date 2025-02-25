@@ -34,7 +34,7 @@ Os códigos seguintes ainda não foram implementados.
 # 2. Códigos e funções que obtém e armazenam os dados do multimedidor (.py)
 # 3. Código que configura e instala tudo quase que de forma automática (.sh)
 ## 3.1 Instalando o MariaDB e configurando o banco de dados.
-O código intitulado [Install_and_config.sh](Codes/Install_and_config.sh) instala do banco de dados que será utilizado (MariaDB), configura o mesmo e o *database* utilizado [script.sql](Codes/script.sql) chamado "chapada_imperial", que foi melhor explicado no tópico [1. Código do Banco de Dados](#1. Código do Banco de Dados).
+O código intitulado [install_and_config.sh](Codes/install_and_config.sh) instala do banco de dados que será utilizado (MariaDB), configura o mesmo e o *database* utilizado [script.sql](Codes/script.sql) chamado "chapada_imperial", que foi melhor explicado no tópico [1. Código do Banco de Dados](#1. Código do Banco de Dados).
 
 As configurações pré configuradas são:
 
