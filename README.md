@@ -33,3 +33,19 @@ As variáveis e seus respectivos *offsets* e unidades de medida são:
 Os códigos seguintes ainda não foram implementados.
 # 2. Códigos e funções que obtém e armazenam os dados do multimedidor (.py)
 # 3. Código que configura e instala tudo quase que de forma automática (.sh)
+## 3.1 Instalando o MariaDB e configurando o banco de dados.
+O código intitulado [Install_and_config.sh](Codes/Install_and_config.sh) instala do banco de dados que será utilizado (MariaDB), configura o mesmo e o *database* utilizado [script.sql](Codes/script.sql) chamado "chapada_imperial", que foi melhor explicado no tópico [1. Código do Banco de Dados](#1. Código do Banco de Dados).
+
+As configurações pré configuradas são:
+
+| Variável              | Como foi configurado                                                                           |
+| --------------------- | ---------------------------------------------------------------------------------------------- |
+| Nome do usuário       | root                                                                                           |
+| Senha                 | pico_central_hidro                                                                             |
+| Usuários anônimos     | Todos foram removidos                                                                          |
+| Bancos de Teste       | Todos foram removidos                                                                          |
+| Login Remoto          | Ativado (Poder acessar o banco de dados por meio de outro computado por meio do protocolo ssh) |
+| Privilégios de tabela | Recarregado                                                                                    |
+
+Configurado desse jeito, para acessar o banco de dados pelo terminal basta rodar o comando ``` mysql -u root -ppico_central_hidro ```para acessar o [banco de dados][1].
+[1]: precisa escrever '-ppico_central_hidro' de forma junta para entender que é a senha. Se colocar separado, ele entende 'pico_central_hidro' como sendo o nome do banco de dados
