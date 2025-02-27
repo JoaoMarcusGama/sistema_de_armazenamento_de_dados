@@ -32,9 +32,9 @@ EOF
 echo "Configuração do MariaDB concluída!"
 
 # Baixa o repositório do GitHub
-git clone https://github.com/usuario/repositorio.git /opt/repositorio
+git clone https://github.com/JoaoMarcusGama/sistema_de_armazenamento_de_dados.git /opt/sistema_de_armazenamento_de_dados
 
 # Executa o código SQL presente no repositório
-mysql -u root -ppico_central_hidro < /opt/repositorio/script.sql
+mysql -u root -ppico_central_hidro < /opt/sistema_de_armazenamento_de_dados/Codes/script.sql
 
 echo "Execução do script SQL concluída!"
