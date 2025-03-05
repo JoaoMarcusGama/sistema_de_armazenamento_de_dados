@@ -32,9 +32,13 @@ As variáveis e seus respectivos *offsets* e unidades de medida são:
 
 Os códigos seguintes ainda não foram implementados.
 # 2. Códigos e funções que obtém e armazenam os dados do multimedidor (.py)
+
+Como o sistema ficara instalado para outras análises, buscando facilitar qualquer futura alteração no código, optou-se por criar uma função que facilita as configurações do offset do multimedidor ([script_modbus.py](Codes/script_modbus.py)) e outro que junta essa configuração e salva os dados coletados no banco de dados SQL ([script_banco_dados.py](Codes/script_banco_dados.py)). Executando esses dois, o sistema pega os dados e os armazena no banco de dados, permitindo adição de novos parâmetros ou exclusão de outros.
+
 # 3. Código que configura e instala tudo quase que de forma automática (.sh)
 ## 3.1 Instalando o MariaDB e configurando o banco de dados.
-O código intitulado [install_and_config.sh](Codes/install_and_config.sh) instala do banco de dados que será utilizado (MariaDB), configura o mesmo e o *database* utilizado [script.sql](Codes/script.sql) chamado "chapada_imperial", que foi melhor explicado no tópico [1. Código do Banco de Dados](#1. Código do Banco de Dados).
+
+O código intitulado [install_and_config.sh](Codes/install_and_config.sh) instala do banco de dados que será utilizado (MariaDB), configura o mesmo e o *database* utilizado [script.sql](Codes/script.sql) chamado "chapada_imperial", que foi melhor explicado no tópico [1. Código do Banco de Dados](README#1. Código do Banco de Dados).
 
 As configurações pré configuradas são:
 
@@ -47,5 +51,6 @@ As configurações pré configuradas são:
 | Login Remoto          | Ativado (Poder acessar o banco de dados por meio de outro computado por meio do protocolo ssh) |
 | Privilégios de tabela | Recarregado                                                                                    |
 
-Configurado desse jeito, para acessar o banco de dados pelo terminal basta rodar o comando ``` mysql -u root -ppico_central_hidro ```para acessar o [banco de dados][1].
-[1]: precisa escrever '-ppico_central_hidro' de forma junta para entender que é a senha. Se colocar separado, ele entende 'pico_central_hidro' como sendo o nome do banco de dados
+Configurado desse jeito, para acessar o banco de dados pelo terminal basta rodar o comando ``` mysql -u root -ppico_central_hidro ```para acessar o banco de dados.
+
+```precisa escrever '-ppico_central_hidro' de forma junta para entender que é a senha. Se colocar separado, ele entende 'pico_central_hidro' como sendo o nome do banco de dados```
