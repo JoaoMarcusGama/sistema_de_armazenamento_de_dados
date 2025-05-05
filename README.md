@@ -54,3 +54,13 @@ As configurações pré configuradas são:
 Configurado desse jeito, para acessar o banco de dados pelo terminal basta rodar o comando ``` mysql -u root -ppico_central_hidro ```para acessar o banco de dados.
 
 ```precisa escrever '-ppico_central_hidro' de forma junta para entender que é a senha. Se colocar separado, ele entende 'pico_central_hidro' como sendo o nome do banco de dados```
+
+# 4. Iniciando o código python ao iniciar o sistema
+
+Com o código localizado no caminho */opt/sistema_de_armazenamento_de_dados/Codes/script_banco_dados.py*, para que o mesmo possa ser iniciado na hora que o sistema é ligado, precisa-se seguir o seguinte passo a passo:
+
+1. Como o usuário pico_central_hidrelétrica, digitar no terminal o comando ```contrab -e ```. Com isso, abrirá opções de editores de terminal. Selecione o editor nano.
+
+2. Com o documento aberto, vá até o final do mesmo e, em uma linha nova, coloque o comando ``` @reboot /usr/bin/python3 /opt/sistema_de_armazenamento_de_dados/Codes/script_banco_dados.py & ```. Com isso, clique ***Ctrl + X***, depois ***Y*** e depois ***Enter***.
+
+3. Após isso, reinicie o sistema com o comando ``` sudo reboot ```.
