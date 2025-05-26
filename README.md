@@ -63,6 +63,12 @@ Com isso, foi criado o ambiente virtual que rodará o código e as bibliotecas n
 
 As bibliotecas necessárias se encontram na pasta Codes com o nome de ```requirements.txt``` e que podem ser instalados de forma automática por meio do comando ```pip3 install -r requirements.txt```. Com isso, pode-se ir para a autoinicialização.
 
+## OBSERVAÇÂO
+
+Para que o código funcione, é necessário que o usuário tenha acesso à porta USB da raspberry. Com isso, para garantir isso, coloque o comando ```sudo usermod -a -G dialout $USER```. Com isso, o usuário (no nosso caso, pico_central_hidreletrica) consegue fazer o código python ter acesso ao USB quando ele rodar.
+
+Com esse comando, é necessário reiniciar a raspberry (```sudo reboot```).
+
 # 4. Iniciando o código python ao iniciar o sistema
 
 Com o código localizado no caminho */opt/sistema_de_armazenamento_de_dados/Codes/script_banco_dados.py*, para que o mesmo possa ser iniciado na hora que o sistema é ligado, precisa-se seguir o seguinte passo a passo:
