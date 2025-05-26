@@ -3,19 +3,19 @@ import subprocess
 import sys
 
 # Verifica e instala as bibliotecas necessárias
-def instalar_bibliotecas():
-    bibliotecas = ["pymodbus", "mysql-connector-python"]
-    for biblioteca in bibliotecas:
-        try:
-            __import__(biblioteca.replace("-", "_"))  # mysql-connector-python usa underline no import
-        except ImportError:
-            print(f"Instalando {biblioteca}...")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", biblioteca])
+#def instalar_bibliotecas():
+#    bibliotecas = ["pymodbus", "mysql-connector-python"]
+#    for biblioteca in bibliotecas:
+#        try:
+#            __import__(biblioteca.replace("-", "_"))  # mysql-connector-python usa underline no import
+#        except ImportError:
+#            print(f"Instalando {biblioteca}...")
+#            subprocess.check_call([sys.executable, "-m", "pip", "install", biblioteca])
 
 # Instala as bibliotecas necessárias
-instalar_bibliotecas()
+#instalar_bibliotecas()
 
-from pymodbus.client.sync import ModbusSerialClient as ModbusClient # type: ignore
+from pymodbus.client import ModbusSerialClient as ModbusClient # type: ignore
 from pymodbus.constants import Endian
 from pymodbus.payload import BinaryPayloadDecoder
 
@@ -36,7 +36,7 @@ def coletar_variaveis_modbus():
     Retorna um dicionário com os valores lidos.
     """
     # Configuração do cliente Modbus RTU
-    client = ModbusClient(method='rtu', port='/dev/ttyUSB0', baudrate=9600, stopbits=1, bytesize=8, parity='N', timeout=1)
+    client = ModbusClient(port='/dev/ttyUSB0', baudrate=9600, stopbits=1, bytesize=8, parity='N', timeout=1)
 
     # Conectar ao dispositivo Modbus
     connection = client.connect()
@@ -50,7 +50,7 @@ def coletar_variaveis_modbus():
         # Loop para ler cada variável
         for var in variaveis:
             # Ler o valor do registrador (assumindo que cada valor ocupa 2 registradores)
-            response = client.read_holding_registers(address=var["offset"], count=2, unit=1)
+            response = client.read_holding_registers(var["offset"], count=2, slave=1)
             
             if response.isError():
                 print(f"Erro ao ler o registrador {var['offset']}: {response}")

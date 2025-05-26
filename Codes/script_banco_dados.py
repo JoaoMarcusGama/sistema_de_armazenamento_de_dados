@@ -3,17 +3,17 @@ import subprocess
 import sys
 
 # Verifica e instala as bibliotecas necessárias
-def instalar_bibliotecas():
-    bibliotecas = ["pymodbus", "mysql-connector-python"]
-    for biblioteca in bibliotecas:
-        try:
-            __import__(biblioteca.replace("-", "_"))  # mysql-connector-python usa underline no import
-        except ImportError:
-            print(f"Instalando {biblioteca}...")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", biblioteca])
+#def instalar_bibliotecas():
+#    bibliotecas = ["pymodbus", "mysql-connector-python"]
+#    for biblioteca in bibliotecas:
+#        try:
+#            __import__(biblioteca.replace("-", "_"))  # mysql-connector-python usa underline no import
+#        except ImportError:
+#            print(f"Instalando {biblioteca}...")
+#            subprocess.check_call([sys.executable, "-m", "pip", "install", biblioteca])
 
 # Instala as bibliotecas necessárias
-instalar_bibliotecas()
+#instalar_bibliotecas()
 
 import mysql.connector
 from datetime import datetime
