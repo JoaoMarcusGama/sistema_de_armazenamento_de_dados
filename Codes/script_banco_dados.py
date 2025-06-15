@@ -1,24 +1,11 @@
 # script_banco_dados.py
 import subprocess
 import sys
-
-# Verifica e instala as bibliotecas necessárias
-#def instalar_bibliotecas():
-#    bibliotecas = ["pymodbus", "mysql-connector-python"]
-#    for biblioteca in bibliotecas:
-#        try:
-#            __import__(biblioteca.replace("-", "_"))  # mysql-connector-python usa underline no import
-#        except ImportError:
-#            print(f"Instalando {biblioteca}...")
-#            subprocess.check_call([sys.executable, "-m", "pip", "install", biblioteca])
-
-# Instala as bibliotecas necessárias
-#instalar_bibliotecas()
-
+import math
 import mysql.connector
 from datetime import datetime
 import time
-from script_modbus import coletar_variaveis_modbus, cria_var  # Importa as funções do primeiro script
+from script_modbus import coletar_variaveis_modbus, cria_var
 
 # Adiciona as variáveis dinamicamente
 cria_var("tensao_L1_N", 1)
@@ -42,6 +29,20 @@ cria_var("potencia_reativa_L3", 35)
 cria_var("corrente_condutor_neutro", 37)
 cria_var("frequencia", 39)
 
+def tratar_nan(valor):
+    """Converte valores NaN para 0, mantém outros valores inalterados"""
+    if valor is None:
+        return None
+    try:
+        # Verifica se é NaN (usando math.isnan para float ou string 'nan')
+        if isinstance(valor, float) and math.isnan(valor):
+            return 0.0
+        if isinstance(valor, str) and valor.lower() == 'nan':
+            return 0.0
+        return valor
+    except (TypeError, ValueError):
+        return valor
+
 def salvar_no_banco(valores):
     """
     Função para salvar os valores no banco de dados.
@@ -56,6 +57,9 @@ def salvar_no_banco(valores):
         )
         cursor = db.cursor()
 
+        # Tratar todos os valores para converter NaN em 0
+        valores_tratados = {k: tratar_nan(v) for k, v in valores.items()}
+
         # Inserir os valores no banco de dados
         query = """
         INSERT INTO multimedidor (
@@ -69,26 +73,26 @@ def salvar_no_banco(valores):
         """
         valores_db = (
             datetime.now(),  # Hora atual
-            valores.get("tensao_L1_N", None),
-            valores.get("tensao_L2_N", None),
-            valores.get("tensao_L3_N", None),
-            valores.get("tensao_L1_L2", None),
-            valores.get("tensao_L2_L3", None),
-            valores.get("tensao_L3_L1", None),
-            valores.get("corrente_L1", None),
-            valores.get("corrente_L2", None),
-            valores.get("corrente_L3", None),
-            valores.get("potencia_aparente_L1", None),
-            valores.get("potencia_aparente_L2", None),
-            valores.get("potencia_aparente_L3", None),
-            valores.get("potencia_ativa_L1", None),
-            valores.get("potencia_ativa_L2", None),
-            valores.get("potencia_ativa_L3", None),
-            valores.get("potencia_reativa_L1", None),
-            valores.get("potencia_reativa_L2", None),
-            valores.get("potencia_reativa_L3", None),
-            valores.get("corrente_condutor_neutro", None),
-            valores.get("frequencia", None)
+            valores_tratados.get("tensao_L1_N", None),
+            valores_tratados.get("tensao_L2_N", None),
+            valores_tratados.get("tensao_L3_N", None),
+            valores_tratados.get("tensao_L1_L2", None),
+            valores_tratados.get("tensao_L2_L3", None),
+            valores_tratados.get("tensao_L3_L1", None),
+            valores_tratados.get("corrente_L1", None),
+            valores_tratados.get("corrente_L2", None),
+            valores_tratados.get("corrente_L3", None),
+            valores_tratados.get("potencia_aparente_L1", None),
+            valores_tratados.get("potencia_aparente_L2", None),
+            valores_tratados.get("potencia_aparente_L3", None),
+            valores_tratados.get("potencia_ativa_L1", None),
+            valores_tratados.get("potencia_ativa_L2", None),
+            valores_tratados.get("potencia_ativa_L3", None),
+            valores_tratados.get("potencia_reativa_L1", None),
+            valores_tratados.get("potencia_reativa_L2", None),
+            valores_tratados.get("potencia_reativa_L3", None),
+            valores_tratados.get("corrente_condutor_neutro", None),
+            valores_tratados.get("frequencia", None)
         )
 
         cursor.execute(query, valores_db)
@@ -114,4 +118,4 @@ if __name__ == "__main__":
             salvar_no_banco(valores)
 
         # Aguardar 1 segundo antes da próxima leitura
-        time.sleep(1)
+        time.sleep(0.5)

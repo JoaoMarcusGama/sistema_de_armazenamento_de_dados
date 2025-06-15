@@ -36,7 +36,7 @@ def coletar_variaveis_modbus():
     Retorna um dicionário com os valores lidos.
     """
     # Configuração do cliente Modbus RTU
-    client = ModbusClient(port='/dev/ttyUSB0', baudrate=9600, stopbits=1, bytesize=8, parity='N', timeout=1)
+    client = ModbusClient(port='/dev/ttyUSB0', baudrate=19200, stopbits=1, bytesize=8, parity='N', timeout=3)
 
     # Conectar ao dispositivo Modbus
     connection = client.connect()
@@ -50,13 +50,13 @@ def coletar_variaveis_modbus():
         # Loop para ler cada variável
         for var in variaveis:
             # Ler o valor do registrador (assumindo que cada valor ocupa 2 registradores)
-            response = client.read_holding_registers(var["offset"], count=2, slave=1)
+            response = client.read_holding_registers(var["offset"], slave=2, count=2)
             
             if response.isError():
                 print(f"Erro ao ler o registrador {var['offset']}: {response}")
             else:
                 # Decodificar o valor lido
-                decoder = BinaryPayloadDecoder.fromRegisters(response.registers, byteorder=Endian.Big, wordorder=Endian.Big)
+                decoder = BinaryPayloadDecoder.fromRegisters(response.registers, byteorder=Endian.BIG, wordorder=Endian.BIG)
                 valor = decoder.decode_32bit_float()
                 
                 # Armazenar o valor no dicionário
